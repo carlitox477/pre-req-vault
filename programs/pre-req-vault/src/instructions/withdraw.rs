@@ -33,7 +33,7 @@ pub struct Withdraw<'info> {
         seeds::program = application_program.key(),
         bump
     )]
-    pub application_account: UncheckedAccount<'info>, // Not a PDA from this programar
+    pub application_account: UncheckedAccount<'info>, // Not a PDA from this programa?
 
     pub application_program: Program<'info, registration::program::Q3PreReqsRs>,
 

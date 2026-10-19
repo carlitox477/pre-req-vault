@@ -18,6 +18,7 @@ pub struct Initialize<'info> {
     pub vault_state: Account<'info, VaultState>,
 
     // separate PDA owned by the System Program
+    // Not initialized
     #[account(
         seeds = [b"vault", vault_state.key().as_ref()],
         bump

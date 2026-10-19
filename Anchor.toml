@@ -8,7 +8,7 @@ skip-lint = false
 pre_req_vault = "FVBqAhYiu7UCzmpEkUUJSkc5mFGtrhdK8D3hf35Fjf5o"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
