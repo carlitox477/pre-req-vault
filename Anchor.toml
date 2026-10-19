@@ -1,5 +1,3 @@
-skip_local_validator = true
-
 [toolchain]
 
 [features]
@@ -7,10 +5,10 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-pre_req_vault = "DBoobRVqT7PaAhq8obqo95723CHyWvcCLRUKvQ5wYWE4"
+pre_req_vault = "FVBqAhYiu7UCzmpEkUUJSkc5mFGtrhdK8D3hf35Fjf5o"
 
 [provider]
-cluster = "devnet"
+cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

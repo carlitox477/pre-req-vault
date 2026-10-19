@@ -1,3 +1,4 @@
+// Import module
 pub mod constants;
 pub mod error;
 pub mod instructions;
@@ -5,11 +6,14 @@ pub mod state;
 
 use anchor_lang::prelude::*;
 
+// Re-export module to be able to re-used again in inherited module
 pub use constants::*;
 pub use instructions::*;
 pub use state::*;
 
-declare_id!("DBoobRVqT7PaAhq8obqo95723CHyWvcCLRUKvQ5wYWE4");
+// Where program will be deployed
+declare_id!("FVBqAhYiu7UCzmpEkUUJSkc5mFGtrhdK8D3hf35Fjf5o");
+
 
 #[program]
 pub mod pre_req_vault {
@@ -26,8 +30,8 @@ pub mod pre_req_vault {
     }
 
     // withdraw funds
-    pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
-        ctx.accounts.withdraw(amount)
+    pub fn withdraw(ctx: Context<Withdraw>, amount: u64, github_user: String) -> Result<()> {
+        ctx.accounts.withdraw(amount, &github_user)
     }
 
     // close

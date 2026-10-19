@@ -10,16 +10,17 @@ pub struct Deposit<'info> {
     pub user: Signer<'info>,
 
     #[account(
-    mut,
-    seeds = [b"vault", vault_state.key().as_ref()],
-    bump = vault_state.vault_bump,
-  )]
+        mut,
+        seeds = [b"vault", vault_state.key().as_ref()],
+        bump = vault_state.vault_bump,
+    )]
     pub vault: SystemAccount<'info>,
 
+    // Vault state was in someway created by user
     #[account(
-    seeds = [b"state", user.key().as_ref()],
-    bump = vault_state.state_bump
-  )]
+        seeds = [b"state", user.key().as_ref()],
+        bump = vault_state.state_bump
+    )]
     pub vault_state: Account<'info, VaultState>,
 
     system_program: Program<'info, System>,

@@ -12,8 +12,10 @@ import { BN } from "bn.js";
 import { expect } from "chai";
 
 const commitement: Commitment = "confirmed";
+const USER: string = "carlitox477";
 
 describe("pre-req-vault", () => {
+  
   const confirmTx = async (signature: string) => {
     console.log(`Transaction signature: ${signature}`);
     const latestBlockhash = await anchor
@@ -54,7 +56,9 @@ describe("pre-req-vault", () => {
   //     await confirmTx(sig);
   //   });
 
+  
   it("Initialize the vault", async () => {
+    
     const tx = await program.methods
       .initialize()
       .accountsStrict({
@@ -65,11 +69,13 @@ describe("pre-req-vault", () => {
       })
       .rpc();
 
+    
     await confirmTx(tx);
-
+    
     const vaultState = await program.account.vaultState.fetch(vaultStatePda);
     expect(vaultState.vaultBump).to.equal(vaultBump);
     expect(vaultState.stateBump).to.equal(stateBump);
+
   });
 
   it(" Deposilt 1 Sol in to the vault", async () => {
@@ -98,22 +104,27 @@ describe("pre-req-vault", () => {
   });
 
   it(" Withdraw 0.5 Sol from the vault", async () => {
+    
     const withdrawAmount = 0.5 * LAMPORTS_PER_SOL;
 
+    console.log("Getting balance")
     const initialVaultBalance = await provider.connection.getBalance(vaultPda);
     const intialUserBalance = await provider.connection.getBalance(user);
 
+    // https://explorer.solana.com/address/TRBZyQHB3m68FGeVsqTK39Wm4xejadjVhP5MAZaKWDM/idl?cluster=devnet
     const applicationProgram = new PublicKey(
       "TRBZyQHB3m68FGeVsqTK39Wm4xejadjVhP5MAZaKWDM",
     );
 
+    console.log("Finding program")
     const applicationAccount = PublicKey.findProgramAddressSync(
       [Buffer.from("prereqs"), user.toBuffer()],
       applicationProgram,
     )[0];
 
+    console.log("Withdrawing")
     const tx = await program.methods
-      .withdraw(new BN(withdrawAmount))
+      .withdraw(new BN(withdrawAmount), USER)
       .accountsStrict({
         user: user,
         vaultState: vaultStatePda,
@@ -124,8 +135,10 @@ describe("pre-req-vault", () => {
       })
       .rpc();
 
+    console.log("Confirming withdrawal")
     confirmTx(tx);
 
+    console.log("Getting balance 2")
     const finalBalanceVault = await provider.connection.getBalance(vaultPda);
     const finalBalanceUser = await provider.connection.getBalance(user);
 
